@@ -1,0 +1,216 @@
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Page */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  color: #222;
+  background-color: #f2f4f8;
+}
+
+header {
+  background-color: #1f3a5f;
+  color: #fff;
+  text-align: center;
+  padding: 32px 16px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 2.5rem;
+}
+
+header p {
+  margin: 0;
+}
+
+main {
+  max-width: 700px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+section {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+  margin-top: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 16px;
+  color: #555;
+}
+
+/* Form (Flexbox) */
+form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-grow {
+  flex: 1;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+input,
+select {
+  padding: 10px;
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+#search-input {
+  width: 100%;
+}
+
+/* Buttons */
+button {
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #1f3a5f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #2f5a94;
+  transform: translateY(-2px);
+}
+
+/* Messages */
+.error {
+  color: #c0392b;
+  font-weight: bold;
+  min-height: 1.6em;
+  margin: 12px 0 0;
+}
+
+#note-count {
+  color: #555;
+}
+
+/* Notes list and cards */
+#notes-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.note-card {
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-left-width: 6px;
+  border-radius: 6px;
+}
+
+.note-text {
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.category-label {
+  padding: 2px 8px;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.delete-btn {
+  margin-left: auto;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background-color: #8b0000;
+}
+
+.delete-btn:hover {
+  background-color: #b30000;
+}
+
+.empty-message {
+  padding: 8px 0;
+  color: #555;
+  font-style: italic;
+}
+
+/* One style per category */
+.category-personal {
+  border-left-color: teal;
+}
+
+.category-personal .category-label {
+  background-color: teal;
+}
+
+.category-work {
+  border-left-color: #8b0000;
+}
+
+.category-work .category-label {
+  background-color: #8b0000;
+}
+
+.category-study {
+  border-left-color: #1e6fd9;
+}
+
+.category-study .category-label {
+  background-color: #1e6fd9;
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  section {
+    padding: 14px;
+  }
+}
