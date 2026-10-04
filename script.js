@@ -2,12 +2,34 @@
 const form = document.querySelector("#note-form");
 const noteInput = document.querySelector("#note-input");
 const categorySelect = document.querySelector("#note-category");
+const searchInput = document.querySelector("#search-input");
 const notesList = document.querySelector("#notes-list");
 const noteCount = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
 
 // ---------- Data ----------
-let notes = [];
+const STORAGE_KEY = "quicknotes-notes";
+
+function loadNotes() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    } catch (error) {
+      // Corrupted data: start with an empty list.
+    }
+  }
+  return [];
+}
+
+function saveNotes() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+}
+
+let notes = loadNotes();
 
 // ---------- Helpers ----------
 function capitalise(word) {
@@ -32,11 +54,28 @@ function updateCount() {
   }
 }
 
+// Returns the notes that match every word typed in the search box.
+function getVisibleNotes() {
+  const words = searchInput.value
+    .trim()
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  return notes.filter(function (note) {
+    const text = note.text.toLowerCase();
+    return words.every(function (word) {
+      return text.includes(word);
+    });
+  });
+}
+
 // ---------- Delete ----------
 function deleteNote(id) {
   notes = notes.filter(function (note) {
     return note.id !== id;
   });
+  saveNotes();
   render();
 }
 
@@ -74,9 +113,20 @@ function createNoteCard(note) {
 
 function render() {
   notesList.replaceChildren();
-  notes.forEach(function (note) {
+
+  const visibleNotes = getVisibleNotes();
+
+  if (notes.length > 0 && visibleNotes.length === 0) {
+    const message = document.createElement("li");
+    message.classList.add("empty-message");
+    message.textContent = "No notes match your search.";
+    notesList.appendChild(message);
+  }
+
+  visibleNotes.forEach(function (note) {
     notesList.appendChild(createNoteCard(note));
   });
+
   updateCount();
 }
 
@@ -105,9 +155,15 @@ form.addEventListener("submit", function (event) {
   };
 
   notes.unshift(note);
+  saveNotes();
+
   noteInput.value = "";
+  searchInput.value = "";
   noteInput.focus();
   render();
 });
+
+// ---------- Search ----------
+searchInput.addEventListener("input", render);
 
 render();
